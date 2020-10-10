@@ -2,13 +2,14 @@ import express from 'express';
 
 import {
   authUser,
+  createUser,
   getUserProfile,
   getUsers,
 } from '../controllers/userController.js';
 import { protect } from '../middleware/authMiddleware.js';
 const router = express.Router();
 
-router.get('/', getUsers);
+router.route('/').post(createUser);
 router.post('/login', authUser);
 router.route('/profile').get(protect, getUserProfile);
 
