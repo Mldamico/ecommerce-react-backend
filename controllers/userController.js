@@ -61,6 +61,17 @@ const getUsers = asyncHandler(async (req, res) => {
   res.json(users);
 });
 
+const deleteUser = asyncHandler(async (req, res) => {
+  const users = await User.findById(req.params.id);
+  if (users) {
+    await user.remove();
+    res.json({ message: 'User removed' });
+  } else {
+    res.status(404);
+    throw new Error('User not found.');
+  }
+});
+
 const updateProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
   if (user) {
@@ -83,4 +94,11 @@ const updateProfile = asyncHandler(async (req, res) => {
   }
 });
 
-export { authUser, getUsers, getUserProfile, createUser, updateProfile };
+export {
+  authUser,
+  getUsers,
+  getUserProfile,
+  createUser,
+  updateProfile,
+  deleteUser,
+};
