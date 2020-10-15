@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import productRoutes from './routes/productsRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
-import uploadRoutes from './routes/uploadRoutes';
+import uploadRoutes from './routes/uploadRoutes.js';
 import colors from 'colors';
 import connectDB from './config/db.js';
 import path from 'path';
