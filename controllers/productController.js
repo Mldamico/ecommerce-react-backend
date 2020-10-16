@@ -2,7 +2,15 @@ import Product from '../models/productModel.js';
 import asyncHandler from 'express-async-handler';
 
 const getProducts = asyncHandler(async (req, res) => {
-  const products = await Product.find({});
+  const keyword = req.query.keyword
+    ? {
+        name: {
+          $regex: req.query.keyword,
+          $options: 'i',
+        },
+      }
+    : {};
+  const products = await Product.find({ ...keyword });
   res.json(products);
 });
 
@@ -76,8 +84,9 @@ const updateProduct = asyncHandler(async (req, res) => {
 
 const createNewReview = asyncHandler(async (req, res) => {
   const { rating, comment } = req.body;
-
+  console.log(req.params.id);
   const product = await Product.findById(req.params.id);
+  console.log(product);
   if (product) {
     const alreadyReviewed = product.reviews.find(
       (r) => r.user.toString() === req.user._id.toString()
@@ -90,7 +99,7 @@ const createNewReview = asyncHandler(async (req, res) => {
       name: req.user.name,
       rating: Number(rating),
       comment,
-      user: req.user_.id,
+      user: req.user._id,
     };
 
     product.reviews.push(review);
